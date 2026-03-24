@@ -6,6 +6,7 @@
     <title>Missão: Level 18 🎂</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
     <style>
@@ -28,101 +29,52 @@
             height: 100%;
         }
 
-        /* Fundo Animado de Brilhos */
         .bg-stars {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; pointer-events: none;
             background: radial-gradient(circle at 50% 50%, rgba(255, 77, 109, 0.05) 0%, transparent 80%);
         }
 
-        /* Estrutura de Seções */
         section {
-            display: none;
-            min-height: 100vh;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 30px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
+            display: none; min-height: 100vh;
+            flex-direction: column; align-items: center; justify-content: center;
+            padding: 30px; text-align: center; opacity: 0; transform: translateY(20px);
         }
 
-        section.active {
-            display: flex;
-            animation: slideIn 0.8s forwards;
-        }
+        section.active { display: flex; animation: slideIn 0.8s forwards; }
 
-        @keyframes slideIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideIn { to { opacity: 1; transform: translateY(0); } }
 
-        /* Elementos de Vidro (Glassmorphism) */
         .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 40px;
+            background: var(--glass); backdrop-filter: blur(10px);
+            border-radius: 24px; padding: 40px;
             box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.5);
-            max-width: 450px;
-            width: 100%;
+            max-width: 450px; width: 100%;
         }
 
-        /* Botões */
         .btn {
             background: linear-gradient(45deg, var(--primary), var(--accent));
-            color: white; border: none;
-            padding: 16px 35px; border-radius: 50px;
-            font-weight: 700; font-size: 1rem;
-            cursor: pointer; margin-top: 15px;
-            letter-spacing: 1px;
-            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+            color: white; border: none; padding: 16px 35px; border-radius: 50px;
+            font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 15px;
+            letter-spacing: 1px; box-shadow: 0 8px 20px rgba(255,77,109,0.3);
             text-transform: uppercase;
         }
 
-        .btn:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 77, 109, 0.4);
-        }
+        .btn:hover { transform: scale(1.05) translateY(-3px); }
 
-        .btn:active { transform: scale(0.98); }
-
-        /* Estilos Específicos */
-        h1, h2 { font-family: 'Dancing Script', crossorigin; color: var(--primary-dark); }
+        h1, h2 { font-family: 'Dancing Script', cursive; color: var(--primary-dark); }
         h1 { font-size: 3rem; margin-bottom: 10px; }
 
-        .stats-grid {
-            display: grid; grid-template-columns: 1fr; gap: 10px;
-            text-align: left; margin: 20px 0;
-        }
-        .stat-item {
-            background: rgba(255, 255, 255, 0.5);
-            padding: 10px 15px; border-radius: 12px;
-            border-left: 4px solid var(--primary);
-        }
+        .stats-grid { display: grid; grid-template-columns: 1fr; gap: 10px; text-align: left; margin: 20px 0; }
+        .stat-item { background: rgba(255,255,255,0.5); padding: 10px 15px; border-radius: 12px; border-left: 4px solid var(--primary); }
 
-        /* Timeline Cards */
-        .timeline-box {
-            display: flex; flex-direction: column; gap: 15px; margin-top: 20px;
-        }
-        .time-card {
-            background: white; padding: 15px; border-radius: 15px;
-            cursor: pointer; border: 1px solid transparent;
-        }
-        .time-card:hover { border-color: var(--primary); background: #fffafa; }
+        .timeline-box { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .time-card { background: white; padding: 15px; border-radius: 15px; cursor: pointer; border: 1px solid transparent; }
+        .time-card:hover { border-color: var(--primary); }
 
-        /* Botão que foge */
-        #perfeitaBtn { position: relative; z-index: 10; }
+        .letter-text { font-size: 1.1rem; line-height: 1.8; color: #555; text-align: left; min-height: 150px; }
 
-        /* Efeito Carta */
-        .letter-text {
-            font-size: 1.1rem; line-height: 1.8;
-            color: #555; text-align: left;
-            min-height: 150px;
-        }
-
-        /* Música */
         .music-ctrl {
             position: fixed; top: 20px; right: 20px; z-index: 100;
             background: white; border-radius: 50%; width: 45px; height: 45px;
@@ -130,19 +82,10 @@
             cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* Final Impactante */
         #stepFinal { background: #1a1a1a; color: white; }
-        #stepFinal h1 { color: var(--accent); }
 
-        /* Corações caindo */
-        .heart-fall {
-            position: absolute; color: var(--primary);
-            animation: fall linear forwards;
-            pointer-events: none; z-index: 99;
-        }
-        @keyframes fall {
-            to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
+        .heart-fall { position: absolute; color: var(--primary); animation: fall linear forwards; pointer-events: none; z-index: 99; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
@@ -152,6 +95,7 @@
     <div class="music-ctrl" onclick="toggleMusic()">
         <span id="musicIcon">🎵</span>
     </div>
+
     <audio id="bgMusic" loop>
         <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
     </audio>
@@ -171,7 +115,7 @@
             <h1>Level 18 Alcançado!</h1>
             <div class="stats-grid">
                 <div class="stat-item">✨ <strong>Beleza:</strong> Nível Infinito</div>
-                <div class="stat-item">🚗 <strong>Skill:</strong> Licença para dirigir (em breve!)</div>
+                <div class="stat-item">🚗 <strong>Skill:</strong> Licença para dirigir</div>
                 <div class="stat-item">⚖️ <strong>Responsabilidade:</strong> +100xp</div>
                 <div class="stat-item">💖 <strong>Status:</strong> A dona do meu coração</div>
             </div>
@@ -186,7 +130,6 @@
             <button class="btn" onclick="openPath('fofo')">Algo Fofo 🥺</button>
             <button class="btn" onclick="openPath('engracado')" style="background: #6c757d;">Algo Engraçado 😂</button>
         </div>
-        
         <div id="pathContent" class="glass-card" style="display:none; margin-top: 20px;">
             <p id="pathText"></p>
             <button class="btn" onclick="nextStep(4)">Ir para a Timeline</button>
@@ -199,10 +142,6 @@
             <div class="time-card" onclick="alert('Lembro como se fosse hoje... o mundo parou.')">
                 <strong>📍 O Dia 01</strong>
                 <p>O começo de tudo, onde eu nem imaginava que seria tão feliz.</p>
-            </div>
-            <div class="time-card" onclick="alert('Minha barriga doía de tanto rir com você!')">
-                <strong>😂 Nossa Melhor Risada</strong>
-                <p>Aquele momento bobo que se tornou eterno.</p>
             </div>
             <div class="time-card" onclick="alert('Cada dia é um novo favorito com você.')">
                 <strong>✨ Hoje</strong>
@@ -231,9 +170,9 @@
     </section>
 
     <section id="stepFinal">
-        <h1 id="finalTitle">Feliz 18 Anos!</h1>
+        <h1>Feliz 18 Anos!</h1>
         <div class="glass-card" style="background: rgba(0,0,0,0.3); color: white;">
-            <p style="font-size: 1.2rem;">Obrigado por ser quem você é. <br>Que esse novo ciclo seja tão incrível quanto o seu sorriso.</p>
+            <p>Obrigado por ser quem você é. <br>Que esse novo ciclo seja tão incrível quanto o seu sorriso.</p>
             <p><strong>Com todo o meu amor, <br> Renan ❤️</strong></p>
         </div>
         <button class="btn" onclick="location.reload()">Ver de novo</button>
@@ -242,6 +181,7 @@
     <script>
         const music = document.getElementById('bgMusic');
         let musicPlaying = false;
+        let pulos = 0;
 
         function toggleMusic() {
             if (musicPlaying) {
@@ -261,49 +201,44 @@
 
         function nextStep(n) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-            const next = document.getElementById('step' + n) || document.getElementById('stepFinal');
-            next.classList.add('active');
-
+            const next = (n === 'Final') ? document.getElementById('stepFinal') : document.getElementById('step' + n);
+            if(next) next.classList.add('active');
             if(n === 6) startTypewriter();
         }
 
-        // Lógica de Caminhos (Fofo vs Engraçado)
         function openPath(type) {
             const box = document.getElementById('pathContent');
             const txt = document.getElementById('pathText');
             box.style.display = 'block';
-            if(type === 'fofo') {
-                txt.innerHTML = "💝 Você é a luz dos meus dias. Cada detalhe seu me faz ter certeza que você é a pessoa certa.";
+            txt.innerHTML = (type === 'fofo') ? "💝 Você é a luz dos meus dias. Cada detalhe seu me encanta." : "😂 Lembra das nossas loucuras? Só a gente entende nossa conexão!";
+        }
+
+        function celebratePerfection() {
+            const btn = document.getElementById('perfeitaBtn');
+            if (pulos < 4) {
+                const largura = window.innerWidth - 150;
+                const altura = window.innerHeight - 150;
+                btn.style.position = 'fixed';
+                btn.style.left = Math.random() * largura + 'px';
+                btn.style.top = Math.random() * altura + 'px';
+                btn.classList.add('animate__animated', 'animate__headShake');
+                setTimeout(() => btn.classList.remove('animate__headShake'), 500);
+                pulos++;
             } else {
-                txt.innerHTML = "😂 Lembra daquela vez que a gente quase... (insira piada interna aqui)? Só a gente entende nossa loucura!";
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                btn.style.position = 'static';
+                btn.innerText = "CONFIRMADO! ✅";
+                document.getElementById('msgPerfeita').style.display = 'block';
+                document.getElementById('btnCarta').style.display = 'inline-block';
+                btn.onclick = null;
             }
         }
 
-        // Botão que foge
-        const btnPerfeita = document.getElementById('perfeitaBtn');
-        btnPerfeita.addEventListener('mouseover', () => {
-            if(btnPerfeita.innerText !== "SIM, COM CERTEZA!") return;
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 100);
-            btnPerfeita.style.position = 'fixed';
-            btnPerfeita.style.left = x + 'px';
-            btnPerfeita.style.top = y + 'px';
-        });
-
-        function celebratePerfection() {
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            btnPerfeita.style.position = 'static';
-            document.getElementById('msgPerfeita').style.display = 'block';
-            document.getElementById('btnCarta').style.display = 'inline-block';
-        }
-
-        // Efeito Máquina de Escrever
         function startTypewriter() {
-            const text = "Meu amor, chegar aos 18 anos é um marco gigante, mas o maior privilégio é meu por estar ao seu lado nesse dia. Você é forte, inteligente, linda e tem o mundo inteiro pela frente. Prometo estar aqui para aplaudir cada uma das suas vitórias. Feliz aniversário, minha vida!";
+            const text = "Meu amor, 18 anos é só o começo. Você é incrível, inteligente e a pessoa mais especial que eu conheço. Estarei sempre aqui para te apoiar em tudo. Feliz aniversário!";
             let i = 0;
             const container = document.getElementById('typewriter');
             container.innerHTML = "";
-            
             function type() {
                 if (i < text.length) {
                     container.innerHTML += text.charAt(i);
@@ -318,19 +253,17 @@
 
         function goFinal() {
             nextStep('Final');
-            setInterval(spawnHeart, 300);
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-fall');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }, 300);
             confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-        }
-
-        function spawnHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart-fall');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
         }
     </script>
 </body>
