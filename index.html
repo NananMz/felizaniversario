@@ -3,134 +3,334 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission: Level 18 🎮</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>Missão: Level 18 🎂</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
     <style>
         :root {
             --primary: #ff4d6d;
-            --secondary: #ff85a1;
-            --bg: #fff5f5;
-        }
-        body {
-            margin: 0; font-family: 'Poppins', sans-serif;
-            background: var(--bg); color: #333; overflow-x: hidden;
-        }
-        section {
-            display: none; min-height: 100vh;
-            flex-direction: column; align-items: center; justify-content: center;
-            padding: 20px; text-align: center;
-        }
-        .active { display: flex; animation: fadeIn 0.8s; }
-        
-        .btn {
-            background: var(--primary); color: white; border: none;
-            padding: 15px 30px; border-radius: 50px; font-weight: bold;
-            cursor: pointer; margin-top: 20px; box-shadow: 0 4px 15px rgba(255,77,109,0.3);
-        }
-        .card {
-            background: white; padding: 20px; border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05); max-width: 400px;
-        }
-        .stats { text-align: left; background: #f0f0f0; padding: 15px; border-radius: 10px; }
-        
-        /* Efeito de digitação */
-        .typing {
-            border-right: 2px solid var(--primary);
-            white-space: nowrap; overflow: hidden;
-            animation: caret 0.75s step-end infinite;
+            --primary-dark: #c9184a;
+            --accent: #ff85a1;
+            --glass: rgba(255, 255, 255, 0.8);
+            --text: #4a4e69;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+
+        body, html {
+            margin: 0; padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe3e3 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            height: 100%;
+        }
+
+        /* Fundo Animado de Brilhos */
+        .bg-stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 77, 109, 0.05) 0%, transparent 80%);
+        }
+
+        /* Estrutura de Seções */
+        section {
+            display: none;
+            min-height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        section.active {
+            display: flex;
+            animation: slideIn 0.8s forwards;
+        }
+
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Elementos de Vidro (Glassmorphism) */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            max-width: 450px;
+            width: 100%;
+        }
+
+        /* Botões */
+        .btn {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white; border: none;
+            padding: 16px 35px; border-radius: 50px;
+            font-weight: 700; font-size: 1rem;
+            cursor: pointer; margin-top: 15px;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 77, 109, 0.4);
+        }
+
+        .btn:active { transform: scale(0.98); }
+
+        /* Estilos Específicos */
+        h1, h2 { font-family: 'Dancing Script', crossorigin; color: var(--primary-dark); }
+        h1 { font-size: 3rem; margin-bottom: 10px; }
+
+        .stats-grid {
+            display: grid; grid-template-columns: 1fr; gap: 10px;
+            text-align: left; margin: 20px 0;
+        }
+        .stat-item {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 10px 15px; border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Timeline Cards */
+        .timeline-box {
+            display: flex; flex-direction: column; gap: 15px; margin-top: 20px;
+        }
+        .time-card {
+            background: white; padding: 15px; border-radius: 15px;
+            cursor: pointer; border: 1px solid transparent;
+        }
+        .time-card:hover { border-color: var(--primary); background: #fffafa; }
+
+        /* Botão que foge */
+        #perfeitaBtn { position: relative; z-index: 10; }
+
+        /* Efeito Carta */
+        .letter-text {
+            font-size: 1.1rem; line-height: 1.8;
+            color: #555; text-align: left;
+            min-height: 150px;
+        }
+
+        /* Música */
+        .music-ctrl {
+            position: fixed; top: 20px; right: 20px; z-index: 100;
+            background: white; border-radius: 50%; width: 45px; height: 45px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Final Impactante */
+        #stepFinal { background: #1a1a1a; color: white; }
+        #stepFinal h1 { color: var(--accent); }
+
+        /* Corações caindo */
+        .heart-fall {
+            position: absolute; color: var(--primary);
+            animation: fall linear forwards;
+            pointer-events: none; z-index: 99;
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
+    <div class="bg-stars"></div>
+
+    <div class="music-ctrl" onclick="toggleMusic()">
+        <span id="musicIcon">🎵</span>
+    </div>
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+    </audio>
+
     <section id="step1" class="active">
-        <h2 class="animate__animated animate__pulse animate__infinite">🎮 SYSTEM LOADING...</h2>
-        <p>Atenção... você está prestes a desbloquear um novo nível.</p>
-        <button class="btn" onclick="nextStep(2)">COMEÇAR MISSÃO</button>
+        <div class="glass-card">
+            <h2 style="font-family: 'Montserrat'; letter-spacing: 3px;">SYSTEM: ACTIVE</h2>
+            <h1>Olá, meu amor! ❤️</h1>
+            <p>Você acaba de receber um convite para uma missão especial: <strong>A jornada do Level 18.</strong></p>
+            <button class="btn" onclick="startMission()">Desbloquear Nível</button>
+        </div>
     </section>
 
     <section id="step2">
-        <h1>LEVEL 18 UNLOCKED! 🎂</h1>
-        <div class="card">
-            <p>Parabéns! Você atingiu o nível máximo de fofura e responsabilidade.</p>
-            <div class="stats">
-                ✅ Habilidade: Dirigir (Vrum vrum! 🚗)<br>
-                ✅ Responsabilidade: +10 📈<br>
-                ✅ Beleza: ♾️ (Maxed Out)
+        <div class="glass-card">
+            <span style="font-size: 3rem;">🔓</span>
+            <h1>Level 18 Alcançado!</h1>
+            <div class="stats-grid">
+                <div class="stat-item">✨ <strong>Beleza:</strong> Nível Infinito</div>
+                <div class="stat-item">🚗 <strong>Skill:</strong> Licença para dirigir (em breve!)</div>
+                <div class="stat-item">⚖️ <strong>Responsabilidade:</strong> +100xp</div>
+                <div class="stat-item">💖 <strong>Status:</strong> A dona do meu coração</div>
             </div>
+            <button class="btn" onclick="nextStep(3)">Continuar Jornada</button>
         </div>
-        <button class="btn" onclick="nextStep(3)">VER LINHA DO TEMPO</button>
     </section>
 
     <section id="step3">
-        <h2>Nossa Jornada ❤️</h2>
-        <div class="card" id="timeline-content">
-            <p>Clique para recordar:</p>
-            <button onclick="updateTimeline('Primeiro Encontro', 'Aquela friozinho na barriga que eu nunca vou esquecer...')">📍 Nosso 1º Encontro</button>
-            <button onclick="updateTimeline('Primeira Risada', 'O momento que eu soube que era você.')">😂 1ª Risada Juntos</button>
+        <h1>O que você quer ver agora?</h1>
+        <p>Escolha o caminho da sua memória:</p>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn" onclick="openPath('fofo')">Algo Fofo 🥺</button>
+            <button class="btn" onclick="openPath('engracado')" style="background: #6c757d;">Algo Engraçado 😂</button>
         </div>
-        <button class="btn" onclick="nextStep(4)" style="margin-top:40px">PRÓXIMA FASE</button>
+        
+        <div id="pathContent" class="glass-card" style="display:none; margin-top: 20px;">
+            <p id="pathText"></p>
+            <button class="btn" onclick="nextStep(4)">Ir para a Timeline</button>
+        </div>
     </section>
 
     <section id="step4">
-        <h2>Área de Teste de Perfeição 🔍</h2>
-        <p>Clique no botão se você for a pessoa mais perfeita do mundo:</p>
-        <button class="btn" id="perfeitaBtn" onclick="confettiExplosion()">CLIQUE AQUI</button>
-        <p id="perfeitaMsg" style="display:none" class="animate__animated animate__bounceIn">SABIA! 😌❤️</p>
-        <button class="btn" onclick="nextStep(5)" style="background:#555">IR PARA A CARTA</button>
+        <h1>Nossa História 📖</h1>
+        <div class="glass-card timeline-box">
+            <div class="time-card" onclick="alert('Lembro como se fosse hoje... o mundo parou.')">
+                <strong>📍 O Dia 01</strong>
+                <p>O começo de tudo, onde eu nem imaginava que seria tão feliz.</p>
+            </div>
+            <div class="time-card" onclick="alert('Minha barriga doía de tanto rir com você!')">
+                <strong>😂 Nossa Melhor Risada</strong>
+                <p>Aquele momento bobo que se tornou eterno.</p>
+            </div>
+            <div class="time-card" onclick="alert('Cada dia é um novo favorito com você.')">
+                <strong>✨ Hoje</strong>
+                <p>Comemorando seus 18 anos e planejando nosso futuro.</p>
+            </div>
+            <button class="btn" onclick="nextStep(5)">Teste de Perfeição</button>
+        </div>
     </section>
 
     <section id="step5">
-        <div class="card">
-            <p id="typewriterText"></p>
+        <h1>Dúvida Cruel...</h1>
+        <p>Você confirma que é a namorada mais perfeita e linda desse mundo?</p>
+        <div style="height: 100px; width: 100%; position: relative;">
+            <button class="btn" id="perfeitaBtn" onclick="celebratePerfection()">SIM, COM CERTEZA!</button>
         </div>
-        <button class="btn" onclick="nextStep(6)">ÚLTIMA SURPRESA 🎁</button>
+        <p id="msgPerfeita" style="display:none; color: var(--primary-dark); font-weight: bold; margin-top: 20px;">EU JÁ SABIA! 😍💍</p>
+        <button id="btnCarta" class="btn" style="display:none; background: var(--text);" onclick="nextStep(6)">Ler minha carta</button>
     </section>
 
     <section id="step6">
-        <h1 class="animate__animated animate__heartBeat animate__infinite">FELIZ 18 ANOS! ❤️</h1>
-        <p>Isso não é só um site, é um pedacinho do meu amor por você.</p>
-        <p><strong>Com amor, Renan</strong></p>
+        <div class="glass-card">
+            <h1>Para Você... 💌</h1>
+            <div id="typewriter" class="letter-text"></div>
+            <button class="btn" id="btnFinal" style="display:none" onclick="goFinal()">Ver Surpresa Final</button>
+        </div>
+    </section>
+
+    <section id="stepFinal">
+        <h1 id="finalTitle">Feliz 18 Anos!</h1>
+        <div class="glass-card" style="background: rgba(0,0,0,0.3); color: white;">
+            <p style="font-size: 1.2rem;">Obrigado por ser quem você é. <br>Que esse novo ciclo seja tão incrível quanto o seu sorriso.</p>
+            <p><strong>Com todo o meu amor, <br> Renan ❤️</strong></p>
+        </div>
+        <button class="btn" onclick="location.reload()">Ver de novo</button>
     </section>
 
     <script>
-        function nextStep(step) {
+        const music = document.getElementById('bgMusic');
+        let musicPlaying = false;
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                music.pause();
+                document.getElementById('musicIcon').innerText = "🔇";
+            } else {
+                music.play();
+                document.getElementById('musicIcon').innerText = "🎵";
+            }
+            musicPlaying = !musicPlaying;
+        }
+
+        function startMission() {
+            if(!musicPlaying) toggleMusic();
+            nextStep(2);
+        }
+
+        function nextStep(n) {
             document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-            document.getElementById('step' + step).classList.add('active');
-            
-            if(step === 4) {
-                // Lógica de movimentar o botão pode entrar aqui
-            }
-            if(step === 5) {
-                startTyping("Meu amor, ver você chegar aos 18 é incrível. Você é minha parceira, minha melhor amiga e o meu maior orgulho...");
+            const next = document.getElementById('step' + n) || document.getElementById('stepFinal');
+            next.classList.add('active');
+
+            if(n === 6) startTypewriter();
+        }
+
+        // Lógica de Caminhos (Fofo vs Engraçado)
+        function openPath(type) {
+            const box = document.getElementById('pathContent');
+            const txt = document.getElementById('pathText');
+            box.style.display = 'block';
+            if(type === 'fofo') {
+                txt.innerHTML = "💝 Você é a luz dos meus dias. Cada detalhe seu me faz ter certeza que você é a pessoa certa.";
+            } else {
+                txt.innerHTML = "😂 Lembra daquela vez que a gente quase... (insira piada interna aqui)? Só a gente entende nossa loucura!";
             }
         }
 
-        function updateTimeline(title, text) {
-            const content = document.getElementById('timeline-content');
-            content.innerHTML = `<h3>${title}</h3><p>${text}</p><button onclick="location.reload()">Recomeçar</button>`;
-        }
+        // Botão que foge
+        const btnPerfeita = document.getElementById('perfeitaBtn');
+        btnPerfeita.addEventListener('mouseover', () => {
+            if(btnPerfeita.innerText !== "SIM, COM CERTEZA!") return;
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            btnPerfeita.style.position = 'fixed';
+            btnPerfeita.style.left = x + 'px';
+            btnPerfeita.style.top = y + 'px';
+        });
 
-        function confettiExplosion() {
+        function celebratePerfection() {
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-            document.getElementById('perfeitaMsg').style.display = 'block';
+            btnPerfeita.style.position = 'static';
+            document.getElementById('msgPerfeita').style.display = 'block';
+            document.getElementById('btnCarta').style.display = 'inline-block';
         }
 
-        function startTyping(text) {
+        // Efeito Máquina de Escrever
+        function startTypewriter() {
+            const text = "Meu amor, chegar aos 18 anos é um marco gigante, mas o maior privilégio é meu por estar ao seu lado nesse dia. Você é forte, inteligente, linda e tem o mundo inteiro pela frente. Prometo estar aqui para aplaudir cada uma das suas vitórias. Feliz aniversário, minha vida!";
             let i = 0;
-            const target = document.getElementById('typewriterText');
-            target.innerHTML = "";
+            const container = document.getElementById('typewriter');
+            container.innerHTML = "";
+            
             function type() {
                 if (i < text.length) {
-                    target.innerHTML += text.charAt(i);
+                    container.innerHTML += text.charAt(i);
                     i++;
                     setTimeout(type, 50);
+                } else {
+                    document.getElementById('btnFinal').style.display = 'inline-block';
                 }
             }
             type();
+        }
+
+        function goFinal() {
+            nextStep('Final');
+            setInterval(spawnHeart, 300);
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+        }
+
+        function spawnHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-fall');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
         }
     </script>
 </body>
